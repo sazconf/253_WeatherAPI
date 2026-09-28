@@ -23,6 +23,7 @@
     </div>
 
     <div class="search-form">
+        <label for="kota">Lokasi</label>
         <input type="text" id="kota" placeholder="Masukkan nama kota" aria-label="Nama kota">
         <button id="search" type="button">Search</button>
     </div>
@@ -44,6 +45,26 @@
         <div class="result-row">
             <h4>Koordinat</h4>
             <p id="koordinat"></p>
+        </div>
+        <div class="result-row">
+            <h4>Negara</h4>
+            <p id="country"></p>
+        </div>
+        <div class="result-row">
+            <h4>Provinsi</h4>
+            <p id="province"></p>
+        </div>
+        <div class="result-row">
+            <h4>Kecamatan</h4>
+            <p id="district"></p>
+        </div>
+        <div class="result-row">
+            <h4>Longitude</h4>
+            <p id="longitude"></p>
+        </div>
+        <div class="result-row">
+            <h4>Latitude</h4>
+            <p id="latitude"></p>
         </div>
     </section>
 </main>
@@ -67,16 +88,36 @@
 
                 console.log(data);
 
+                const feature = data.features[0];
+                const context = feature.context || [];
+                const findContextValue = function(prefixes) {
+                    const item = context.find(function(entry) {
+                        return prefixes.some(function(prefix) {
+                            return entry.id.startsWith(prefix);
+                        });
+                    });
+
+                    return item ? item.text : "Tidak tersedia";
+                };
+
                 const place = document.getElementById("place");
                 const matching = document.getElementById("matching");
                 const type = document.getElementById("type");
                 const koordinat = document.getElementById("koordinat");
+                const coordinates = feature.geometry.coordinates;
 
-                place.innerHTML = data.features[0].place_name;
-                matching.innerHTML = data.features[0].matching_text;
-                type.innerHTML = data.features[0].place_type[0];
-                koordinat.innerHTML =
-                    data.features[0].geometry.coordinates;
+                place.innerHTML = feature.place_name;
+                matching.innerHTML = feature.matching_text || "Tidak tersedia";
+                type.innerHTML = feature.place_type[0];
+                koordinat.innerHTML = coordinates;
+                document.getElementById("country").innerHTML =
+                    findContextValue(["country"]);
+                document.getElementById("province").innerHTML =
+                    findContextValue(["region", "province"]);
+                document.getElementById("district").innerHTML =
+                    findContextValue(["district", "locality", "municipality"]);
+                document.getElementById("longitude").innerHTML = coordinates[0];
+                document.getElementById("latitude").innerHTML = coordinates[1];
 
             },
 
@@ -90,6 +131,11 @@
                 document.getElementById("matching").innerHTML = "";
                 document.getElementById("type").innerHTML = "";
                 document.getElementById("koordinat").innerHTML = "";
+                document.getElementById("country").innerHTML = "";
+                document.getElementById("province").innerHTML = "";
+                document.getElementById("district").innerHTML = "";
+                document.getElementById("longitude").innerHTML = "";
+                document.getElementById("latitude").innerHTML = "";
             }
 
         });

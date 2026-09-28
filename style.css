@@ -83,6 +83,12 @@ h1 {
     margin-bottom: 34px;
 }
 
+.search-form label {
+    align-self: center;
+    color: var(--teal-dark);
+    font-weight: 700;
+}
+
 input {
     min-width: 0;
     flex: 1;
@@ -184,6 +190,10 @@ button:active {
 
     .search-form {
         flex-direction: column;
+    }
+
+    .search-form label {
+        align-self: flex-start;
     }
 
     button {

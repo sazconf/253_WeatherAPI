@@ -1,13 +1,15 @@
-# MapTiler Geocoding
+# 3NIMBelakang_WeatherApi
 
-A simple web page that searches for a city or location using the MapTiler Geocoding API and displays its location details.
+A browser-based geocoding interface built for the Web Service assignment. It uses the MapTiler API to search for a location and display geographic details.
 
 ## Features
 
 - Search for a place by name
+- Display the selected location
+- Display country, province, and district
+- Display longitude and latitude separately
 - Display the place name
 - Display matching text and geographical place type
-- Display coordinates
 - Responsive styling with Bootstrap 5.3.3 and a custom stylesheet
 
 ## Run Locally
@@ -29,6 +31,21 @@ The page loads these libraries from CDNs:
 - jQuery 4.0.0
 - Bootstrap 5.3.3
 - MapTiler Geocoding API
+
+## Assignment Checklist
+
+- Repository name: `3NIMBelakang_WeatherApi`
+- Minimum commit requirement: met locally with 5 commits
+- API source: [MapTiler](https://api.maptiler.com/)
+- Required outputs: location input, country, province, district, longitude, and latitude
+
+## Screenshot
+
+Successful browser result for a Bandung search:
+
+![Successful MapTiler result](screenshots/maptiler-result.png)
+
+The screenshot shows the completed search with the required geographic fields populated.
 
 ## Usage
 
