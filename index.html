@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapTiler Geocoding</title>
+</head>
+
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0/jquery.min.js"></script>
+
+<main>
+    <p class="eyebrow">MapTiler Geocoding</p>
+    <h1>Find a place.</h1>
+    <p class="intro">Search for a city or location and explore the details returned by MapTiler.</p>
+
+    <div class="student">
+        <span><strong>Nama:</strong> Sazzad Hossain</span>
+        <span><strong>NIM:</strong> 20240140253</span>
+    </div>
+
+    <div class="search-form">
+        <input type="text" id="kota" placeholder="Masukkan nama kota" aria-label="Nama kota">
+        <button id="search" type="button">Search</button>
+    </div>
+
+    <h2 class="results-title">Location details</h2>
+    <section class="results" aria-live="polite">
+        <div class="result-row">
+            <h4>Place name</h4>
+            <p id="place"></p>
+        </div>
+        <div class="result-row">
+            <h4>Matching text</h4>
+            <p id="matching"></p>
+        </div>
+        <div class="result-row">
+            <h4>Type</h4>
+            <p id="type"></p>
+        </div>
+        <div class="result-row">
+            <h4>Koordinat</h4>
+            <p id="koordinat"></p>
+        </div>
+    </section>
+</main>
+
+<script>
+
+    $("#search").click(function () {
+
+        const kota = $("#kota").val();
+
+        const urlapi =
+            "https://api.maptiler.com/geocoding/" +
+            kota +
+            ".json?key=KEY";
+
+        $.ajax({
+            url: urlapi,
+            method: "GET",
+
+            success: function(data) {
+
+                console.log(data);
+
+                const place = document.getElementById("place");
+                const matching = document.getElementById("matching");
+                const type = document.getElementById("type");
+                const koordinat = document.getElementById("koordinat");
+
+                place.innerHTML = data.features[0].place_name;
+                matching.innerHTML = data.features[0].matching_text;
+                type.innerHTML = data.features[0].place_type[0];
+                koordinat.innerHTML =
+                    data.features[0].geometry.coordinates;
+
+            },
+
+            error: function(error) {
+
+                console.log(error);
+
+                document.getElementById("place").innerHTML =
+                    "Data tidak ditemukan";
+
+                document.getElementById("matching").innerHTML = "";
+                document.getElementById("type").innerHTML = "";
+                document.getElementById("koordinat").innerHTML = "";
+            }
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
